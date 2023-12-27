@@ -8,4 +8,5 @@ public class Vertex extends Shape {
     public Vertex(Point p) {
         super(p.x, p.y);
     }
+ 
 }

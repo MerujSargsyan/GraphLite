@@ -6,15 +6,19 @@ import java.awt.event.*;
 //TO-DO: implement MouseListener
 public class DrawPanel extends JPanel implements MouseListener{
     private ArrayList<Shape> shapes;
+    private ArrayList<Vertex> vertecies; 
     final int X_SIZE = 25;
     final int Y_SIZE = 25;
     final int ARC_SIZE = 25;
     final int CENTER_ADJUSTMENT = 12;
+    private Grid grid = new Grid();
 
     public DrawPanel() {
         shapes = new ArrayList<>();
+        vertecies = new ArrayList<>();
     }
 
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -31,15 +35,9 @@ public class DrawPanel extends JPanel implements MouseListener{
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
-        Point p = getMousePosition(false);
-        Shape v = new Vertex(p);
-        shapes.add(v);
-        repaint();
-    }
-
     public void addVertex(Vertex v) {
         shapes.add(v);
+        vertecies.add(v);
         repaint();
     }
 
@@ -47,6 +45,9 @@ public class DrawPanel extends JPanel implements MouseListener{
         g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
             Y_SIZE, ARC_SIZE, ARC_SIZE);
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {}; //nothing happens
 
     @Override
     public void mouseReleased(MouseEvent e) {}; //nothing happens
@@ -59,7 +60,13 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseClicked(e);
+        Point p = getMousePosition(false);
+        Vertex v = new Vertex(p);
+
+        if(grid.usePoint(p)) {
+            addVertex(v);
+            repaint();
+        }
     } 
 
 }

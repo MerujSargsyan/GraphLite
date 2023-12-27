@@ -11,9 +11,9 @@ public class Main {
         window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
         window.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
-        JPanel drawPanel = new DrawPanel();
+        DrawPanel drawPanel = new DrawPanel();
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
-        drawPanel.addMouseListener((DrawPanel)drawPanel);
+        drawPanel.addMouseListener(drawPanel);
         
         drawPanel.setBackground(Color.BLACK);
         window.add(drawPanel);
