@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.awt.Point;
 
 public class Grid {
-    private final int dX = 25;
-    private final int dY = 25;
-    private final int MID25 = 12; //used to round to nearest factor of 25
+    private final int dX = 50;
+    private final int dY = 50;
+    private final int MID = 25; //used to round to nearest factor of 25
 
     private HashMap<Point, Boolean> grid;
 
@@ -28,12 +28,14 @@ public class Grid {
         //rounds to nearest factor of 25
         Point normPoint = new Point(roundValue(p.x), roundValue(p.y));
 
-        return grid.get(normPoint) == false; //no point nearby -> validPoint
+        //no point nearby -> validPoint
+        return grid.get(normPoint) == false; 
     }
 
     public boolean usePoint(Point p) {
         if(validPoint(p)) {
-            grid.put(p, true);
+            grid.put(new Point(roundValue(p.x), roundValue(p.y)), 
+                true);
             return true;
         }
         return false;
@@ -43,7 +45,7 @@ public class Grid {
         int difference = num % dX;
         int output = num - difference;
 
-        if(difference < MID25) {
+        if(difference < MID) {
             return output;
         } else {
             //scales to the upper value of num ex: 640 -> 650, not 625
