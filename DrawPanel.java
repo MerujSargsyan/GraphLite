@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.awt.event.*;
 
 //TO-DO: implement MouseListener
-public class DrawPanel extends JPanel {
+public class DrawPanel extends JPanel implements MouseListener{
     private ArrayList<Shape> shapes;
     final int X_SIZE = 25;
     final int Y_SIZE = 25;
@@ -30,6 +30,12 @@ public class DrawPanel extends JPanel {
         }
     }
 
+    public void mouseClicked(MouseEvent e) {
+        Point p = getMousePosition(false);
+        Shape v = new Vertex(p);
+        repaint();
+    }
+
     public void addVertex(Vertex v) {
         shapes.add(v);
         repaint();
@@ -38,4 +44,17 @@ public class DrawPanel extends JPanel {
     public void paintVertex(Vertex v, Graphics g) {
         g.fillRoundRect(v.x, v.y, X_SIZE, Y_SIZE, ARC_SIZE, ARC_SIZE);
     }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}; //nothing happens
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}; //nothing happens
+
+    @Override
+    public void mouseExited(MouseEvent e) {};
+
+    @Override
+    public void mousePressed(MouseEvent e) {}; //nothing happens
+
 }
