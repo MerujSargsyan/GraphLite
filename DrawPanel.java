@@ -9,6 +9,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     final int X_SIZE = 25;
     final int Y_SIZE = 25;
     final int ARC_SIZE = 25;
+    final int CENTER_ADJUSTMENT = 12;
 
     public DrawPanel() {
         shapes = new ArrayList<>();
@@ -33,6 +34,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         Point p = getMousePosition(false);
         Shape v = new Vertex(p);
+        shapes.add(v);
         repaint();
     }
 
@@ -42,7 +44,8 @@ public class DrawPanel extends JPanel implements MouseListener{
     }
 
     public void paintVertex(Vertex v, Graphics g) {
-        g.fillRoundRect(v.x, v.y, X_SIZE, Y_SIZE, ARC_SIZE, ARC_SIZE);
+        g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
+            Y_SIZE, ARC_SIZE, ARC_SIZE);
     }
 
     @Override
@@ -52,9 +55,11 @@ public class DrawPanel extends JPanel implements MouseListener{
     public void mouseEntered(MouseEvent e) {}; //nothing happens
 
     @Override
-    public void mouseExited(MouseEvent e) {};
+    public void mouseExited(MouseEvent e) {}; //nothing happens
 
     @Override
-    public void mousePressed(MouseEvent e) {}; //nothing happens
+    public void mousePressed(MouseEvent e) {
+        mouseClicked(e);
+    } 
 
 }

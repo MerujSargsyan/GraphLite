@@ -13,7 +13,8 @@ public class Main {
 
         JPanel drawPanel = new DrawPanel();
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
-
+        drawPanel.addMouseListener((DrawPanel)drawPanel);
+        
         drawPanel.setBackground(Color.BLACK);
         window.add(drawPanel);
         window.setVisible(true);
