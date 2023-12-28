@@ -61,9 +61,8 @@ public class DrawPanel extends JPanel implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         Point p = getMousePosition(false);
-        Vertex v = new Vertex(p);
-
-        if(grid.usePoint(p)) {
+        Vertex v = grid.usePoint(p);
+        if(v != null) {
             addVertex(v);
             repaint();
         }

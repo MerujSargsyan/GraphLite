@@ -14,11 +14,8 @@ public class Grid {
     }
 
     private void createGrid() {
-        int xPos = 0;
-        int yPos = 0;
-        
-        for(int i = xPos; i < Main.WINDOW_SIZE_X; i += dX) {
-            for(int j = yPos; j < Main.WINDOW_SIZE_Y; j += dY) {
+        for(int i = 0; i < Main.WINDOW_SIZE_X; i += dX) {
+            for(int j = 0; j < Main.WINDOW_SIZE_Y; j += dY) {
                 grid.put(new Point(i, j), false);
             }
         } 
@@ -32,13 +29,14 @@ public class Grid {
         return grid.get(normPoint) == false; 
     }
 
-    public boolean usePoint(Point p) {
+    public Vertex usePoint(Point p) {
         if(validPoint(p)) {
-            grid.put(new Point(roundValue(p.x), roundValue(p.y)), 
-                true);
-            return true;
+            Point newP = new Point(roundValue(p.x), roundValue(p.y));
+            grid.put(p, true);
+            return new Vertex(newP);
         }
-        return false;
+        return null;
+        
     }
 
     private int roundValue(int num) {
