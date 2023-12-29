@@ -31,6 +31,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 paintVertex((Vertex)s, g);
             } else if(s instanceof Line) {
                 //Draw line
+                paintLine((Line)s, g);
             }
         }
     }
@@ -38,12 +39,26 @@ public class DrawPanel extends JPanel implements MouseListener{
     public void addVertex(Vertex v) {
         shapes.add(v);
         vertecies.add(v);
+        if(vertecies.size() >= 2) {
+            addLine();
+        }        
         repaint();
+    }
+
+    public void addLine() {
+        Line newLine = new Line(vertecies.get(vertecies.size() - 2), 
+            vertecies.get(vertecies.size() - 1));
+        shapes.add(newLine);
     }
 
     public void paintVertex(Vertex v, Graphics g) {
         g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
             Y_SIZE, ARC_SIZE, ARC_SIZE);
+    }
+
+    public void paintLine(Line l, Graphics g) {
+        g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
+            l.endingPoint.y);
     }
 
     @Override
@@ -64,7 +79,6 @@ public class DrawPanel extends JPanel implements MouseListener{
         Vertex v = grid.usePoint(p);
         if(v != null) {
             addVertex(v);
-            repaint();
         }
     } 
 
