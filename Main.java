@@ -15,7 +15,6 @@ public class Main {
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
         drawPanel.addMouseListener(drawPanel);
         drawPanel.addKeyListener(drawPanel);
-        
 
         drawPanel.setBackground(Color.BLACK);
         window.add(drawPanel);

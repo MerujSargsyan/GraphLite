@@ -13,10 +13,13 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private final int CENTER_ADJUSTMENT = 12;
     private Grid grid = new Grid();
 
-    private int DELETE_VALUE = 8;
-
+    private final int DELETE_VALUE = 8;
+    private int vertexCount;
+    private int edgeCount;
 
     public DrawPanel() {
+        vertexCount = 0;
+        edgeCount = 0;
         shapes = new ArrayList<>();
         vertecies = new ArrayList<>();
     }
@@ -42,7 +45,9 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void addVertex(Vertex v) {
         shapes.add(v);
         vertecies.add(v);
+        vertexCount++;
         if(vertecies.size() >= 2) {
+            edgeCount++;
             addLine();
         }        
         repaint();
@@ -69,6 +74,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         //removes all lines connected to the most recent vertex
         while(!(shapes.get(i) instanceof Vertex) && i > 0) {
             shapes.remove(shapes.get(i));
+            edgeCount--;
             i--;
         }
         //deletes the vertex itself
@@ -76,6 +82,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         grid.deletePoint(v);
         vertecies.remove(v);
         shapes.remove(v);
+        vertexCount--;
         repaint();
     }
 
@@ -98,7 +105,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         Vertex v = grid.usePoint(p);
         if(v != null) {
             addVertex(v);
-        }   
+        }
+        System.out.println("|V| = " + vertexCount + " |E| = " + edgeCount);   
     } 
 
     //Overrides all KeyListener methods

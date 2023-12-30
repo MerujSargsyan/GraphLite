@@ -33,6 +33,7 @@ public class Grid {
         if(validPoint(p)) {
             Point newP = new Point(roundValue(p.x), roundValue(p.y));
             grid.put(p, true);
+
             return new Vertex(newP);
         }
         return null;
