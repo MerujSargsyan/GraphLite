@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.awt.event.*;
 
 //TO-DO: implement MouseListener
-public class DrawPanel extends JPanel implements MouseListener{
+public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private ArrayList<Shape> shapes;
-    private ArrayList<Vertex> vertecies; 
-    final int X_SIZE = 25;
-    final int Y_SIZE = 25;
-    final int ARC_SIZE = 25;
-    final int CENTER_ADJUSTMENT = 12;
+    private ArrayList<Vertex> vertecies;
+    private final int X_SIZE = 25;
+    private final int Y_SIZE = 25;
+    private final int ARC_SIZE = 25;
+    private final int CENTER_ADJUSTMENT = 12;
     private Grid grid = new Grid();
+
+    private int DELETE_VALUE = 8;
+
 
     public DrawPanel() {
         shapes = new ArrayList<>();
@@ -61,6 +64,22 @@ public class DrawPanel extends JPanel implements MouseListener{
             l.endingPoint.y);
     }
 
+    private void deleteRecentButton() {
+        int i = shapes.size() - 1;
+        //removes all lines connected to the most recent vertex
+        while(!(shapes.get(i) instanceof Vertex) && i > 0) {
+            shapes.remove(shapes.get(i));
+            i--;
+        }
+        //deletes the vertex itself
+        Vertex v = (Vertex)shapes.get(shapes.size() - 1);
+        grid.deletePoint(v);
+        vertecies.remove(v);
+        shapes.remove(v);
+        repaint();
+    }
+
+    //Overrides all MouseListener methods
     @Override
     public void mouseClicked(MouseEvent e) {}; //nothing happens
 
@@ -79,7 +98,24 @@ public class DrawPanel extends JPanel implements MouseListener{
         Vertex v = grid.usePoint(p);
         if(v != null) {
             addVertex(v);
-        }
+        }   
     } 
 
+    //Overrides all KeyListener methods
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }; //does nothing
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == DELETE_VALUE) {
+            deleteRecentButton();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}; //does nothing
 }
+
+//TODO: catch too many deletes error

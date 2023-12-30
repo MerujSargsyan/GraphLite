@@ -39,6 +39,10 @@ public class Grid {
         
     }
 
+    public void deletePoint(Vertex v) {
+        grid.put(new Point(v.x, v.y), false);
+    }
+
     private int roundValue(int num) {
         int difference = num % dX;
         int output = num - difference;
