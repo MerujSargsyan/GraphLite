@@ -23,16 +23,13 @@ public class Grid {
  
     private boolean validPoint(Point p) {
         //rounds to nearest factor of 25
-        Point normPoint = new Point(roundValue(p.x), roundValue(p.y));
-
-        //no point nearby -> validPoint
-        return grid.get(normPoint) == false; 
+        return !grid.getOrDefault(p, false);
     }
 
     public Vertex usePoint(Point p) {
-        if(validPoint(p)) {
-            Point newP = new Point(roundValue(p.x), roundValue(p.y));
-            grid.put(p, true);
+        Point newP = new Point(roundValue(p.x), roundValue(p.y));
+        if(validPoint(newP)) {
+            grid.put(newP, true);
 
             return new Vertex(newP);
         }
@@ -44,7 +41,7 @@ public class Grid {
         grid.put(new Point(v.x, v.y), false);
     }
 
-    private int roundValue(int num) {
+    public int roundValue(int num) {
         int difference = num % dX;
         int output = num - difference;
 

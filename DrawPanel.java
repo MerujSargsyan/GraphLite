@@ -53,13 +53,26 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         repaint();
     }
 
+    public void connectVertex(Point v) {
+        Vertex newV = new Vertex(grid.roundValue(v.x), grid.roundValue(v.y));
+        Line newLine = new Line(newV, vertecies.get(vertecies.size()-1));
+        shapes.add(newLine);
+        edgeCount++;
+        repaint();
+    }   
+
     public void addLine() {
         Line newLine = new Line(vertecies.get(vertecies.size() - 2), 
             vertecies.get(vertecies.size() - 1));
-        shapes.add(newLine);
+        shapes.add(newLine); 
     }
 
     public void paintVertex(Vertex v, Graphics g) {
+        if(v.equals(vertecies.get(vertecies.size() - 1))) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.WHITE);
+        }
         g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
             Y_SIZE, ARC_SIZE, ARC_SIZE);
     }
@@ -71,18 +84,17 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     private void deleteRecentButton() {
         int i = shapes.size() - 1;
-        //removes all lines connected to the most recent vertex
-        while(!(shapes.get(i) instanceof Vertex) && i > 0) {
-            shapes.remove(shapes.get(i));
-            edgeCount--;
-            i--;
+        Shape s = shapes.get(shapes.size() - 1);
+        if(s instanceof Vertex) {
+            grid.deletePoint((Vertex)s);
+            vertecies.remove((Vertex)s);
+            vertexCount--;
         }
-        //deletes the vertex itself
-        Vertex v = (Vertex)shapes.get(shapes.size() - 1);
-        grid.deletePoint(v);
-        vertecies.remove(v);
-        shapes.remove(v);
-        vertexCount--;
+        if(s instanceof Line) {
+            edgeCount--;
+        }
+        System.out.println("|V| = " + vertexCount + " |E| = " + edgeCount);   
+        shapes.remove(s);
         repaint();
     }
 
@@ -103,7 +115,9 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void mousePressed(MouseEvent e) {
         Point p = getMousePosition(false);
         Vertex v = grid.usePoint(p);
-        if(v != null) {
+        if(v == null) {
+            connectVertex(p);
+        } else {
             addVertex(v);
         }
         System.out.println("|V| = " + vertexCount + " |E| = " + edgeCount);   
