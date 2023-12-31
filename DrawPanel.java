@@ -141,3 +141,4 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 }
 
 //TODO: catch too many deletes error
+//TODO: create no duplicate edges feature
