@@ -1,4 +1,4 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.*;
@@ -16,8 +16,15 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private final int DELETE_VALUE = 8;
     private int vertexCount;
     private int edgeCount;
+    private JLabel label;
 
     public DrawPanel() {
+        label = new JLabel();
+        label.setSize(100, 50);
+        label.setLocation(50, 50);
+        label.setVisible(true);
+        label.setForeground(Color.WHITE);
+        add(label);
         vertexCount = 0;
         edgeCount = 0;
         shapes = new ArrayList<>();
@@ -93,11 +100,14 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if(s instanceof Line) {
             edgeCount--;
         }
-        System.out.println("|V| = " + vertexCount + " |E| = " + edgeCount);   
+        updateLabel(); 
         shapes.remove(s);
         repaint();
     }
 
+    public void updateLabel() {
+        label.setText("|V| = " + vertexCount + " |E| = " + edgeCount);
+    }
     //Overrides all MouseListener methods
     @Override
     public void mouseClicked(MouseEvent e) {}; //nothing happens
@@ -120,7 +130,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         } else {
             addVertex(v);
         }
-        System.out.println("|V| = " + vertexCount + " |E| = " + edgeCount);   
+        updateLabel();
     } 
 
     //Overrides all KeyListener methods
