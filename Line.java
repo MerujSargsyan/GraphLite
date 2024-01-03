@@ -6,4 +6,21 @@ public class Line extends Shape {
         startingPoint = a;
         endingPoint = b;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Line)) {
+            return false;
+        }
+        Line l = (Line)o;
+        boolean startingEq = this.startingPoint.equals(l.startingPoint);
+        boolean endingEq = this.endingPoint.equals(l.endingPoint);
+        return startingEq && endingEq;
+    }
+    
+    @Override
+    public String toString() {
+        return "<" + startingPoint.x + ", " + startingPoint.y + "> -> <" +
+            endingPoint.x + ", " + endingPoint.y + ">";
+    }
 }

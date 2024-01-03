@@ -7,6 +7,7 @@ import java.awt.event.*;
 public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private ArrayList<Shape> shapes;
     private ArrayList<Vertex> vertecies;
+    private ArrayList<Line> lines;
     private final int X_SIZE = 25;
     private final int Y_SIZE = 25;
     private final int ARC_SIZE = 25;
@@ -29,6 +30,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         edgeCount = 0;
         shapes = new ArrayList<>();
         vertecies = new ArrayList<>();
+        lines = new ArrayList<>();
     }
 
     
@@ -54,7 +56,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         vertecies.add(v);
         vertexCount++;
         if(vertecies.size() >= 2) {
-            edgeCount++;
             addLine();
         }        
         repaint();
@@ -63,7 +64,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void connectVertex(Point v) {
         Vertex newV = new Vertex(grid.roundValue(v.x), grid.roundValue(v.y));
         Line newLine = new Line(newV, vertecies.get(vertecies.size()-1));
+        if(lines.contains(newLine)) {
+            return;
+        }
+        System.out.println(newLine);
         shapes.add(newLine);
+        lines.add(newLine);
         edgeCount++;
         repaint();
     }   
@@ -71,7 +77,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void addLine() {
         Line newLine = new Line(vertecies.get(vertecies.size() - 2), 
             vertecies.get(vertecies.size() - 1));
-        shapes.add(newLine); 
+        System.out.println(newLine);
+        shapes.add(newLine);
+        lines.add(newLine); 
+        edgeCount++;
     }
 
     public void paintVertex(Vertex v, Graphics g) {
@@ -98,6 +107,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             vertexCount--;
         }
         if(s instanceof Line) {
+            lines.remove(s);
             edgeCount--;
         }
         updateLabel(); 
