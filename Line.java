@@ -15,6 +15,11 @@ public class Line extends Shape {
         Line l = (Line)o;
         boolean startingEq = this.startingPoint.equals(l.startingPoint);
         boolean endingEq = this.endingPoint.equals(l.endingPoint);
+        //Lines pointing opposite are still the same edge
+        if(this.startingPoint.equals(l.endingPoint) && 
+            this.endingPoint.equals(l.startingPoint)) {
+            return true;
+        }
         return startingEq && endingEq;
     }
     
