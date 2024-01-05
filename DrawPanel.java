@@ -8,6 +8,10 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private ArrayList<Shape> shapes;
     private ArrayList<Vertex> vertecies;
     private ArrayList<Line> lines;
+
+    private Vertex current;
+    private Vertex previous;
+
     private final int X_SIZE = 25;
     private final int Y_SIZE = 25;
     private final int ARC_SIZE = 25;
@@ -26,6 +30,8 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         label.setVisible(true);
         label.setForeground(Color.WHITE);
         add(label);
+        current = null;
+        previous = null;
         vertexCount = 0;
         edgeCount = 0;
         shapes = new ArrayList<>();
@@ -55,38 +61,38 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         shapes.add(v);
         vertecies.add(v);
         vertexCount++;
-        if(vertecies.size() >= 2) {
-            addLine();
-        }        
+        updateCurrent(v);   
+        addLine();
         repaint();
+    }
+
+    public void updateCurrent(Vertex v) {
+        previous = current;
+        current = v;
     }
 
     public void connectVertex(Point v) {
         Vertex newV = new Vertex(grid.roundValue(v.x), grid.roundValue(v.y));
-        Vertex v2 = vertecies.get(vertecies.size()-1);
-        if(newV.equals(v2)) {
+        if(newV.equals(current)) {
+            updateCurrent(newV);
             return;
         }
-        Line newLine = new Line(newV, v2);
+        Line newLine = new Line(newV, current);
         if(!lines.contains(newLine)) {
-            System.out.println(newLine);
             shapes.add(newLine);
             lines.add(newLine);
             edgeCount++;
-            repaint();
         }
-        
+        updateCurrent(newV);
+        repaint();
     }   
 
     public void addLine() {
-        Vertex v1 = vertecies.get(vertecies.size() - 2);
-        Vertex v2 = vertecies.get(vertecies.size() - 1);
-        if(v1.equals(v2)) {
+        if(current.equals(previous) || current == null || previous == null) {
             return;
         }
-        Line newLine = new Line(v1, v2);
+        Line newLine = new Line(previous, current);
         if(!lines.contains(newLine)) {
-            System.out.println(newLine);
             shapes.add(newLine);
             lines.add(newLine); 
             edgeCount++;
@@ -95,7 +101,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     }
 
     public void paintVertex(Vertex v, Graphics g) {
-        if(v.equals(vertecies.get(vertecies.size() - 1))) {
+        if(v.equals(current)) {
             g.setColor(Color.RED);
         } else {
             g.setColor(Color.WHITE);
@@ -109,7 +115,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             l.endingPoint.y);
     }
 
-    private void deleteRecentButton() {
+    private void deleteRecent() {
         int i = shapes.size() - 1;
         Shape s = shapes.get(shapes.size() - 1);
         if(s instanceof Vertex) {
@@ -120,6 +126,16 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if(s instanceof Line) {
             lines.remove(s);
             edgeCount--;
+        }
+        if(vertecies.size() >= 1) {
+            current = vertecies.get(vertecies.size()-1);
+            previous = null;
+        } else if(vertecies.size() >= 2) {
+            current = vertecies.get(vertecies.size()-1);
+            previous = vertecies.get(vertecies.size()-2);
+        } else {
+            current = null;
+            previous = null;
         }
         updateLabel(); 
         shapes.remove(s);
@@ -163,7 +179,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
-            deleteRecentButton();
+            deleteRecent();
         }
     }
 
@@ -171,4 +187,4 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void keyReleased(KeyEvent e) {}; //does nothing
 }
 
-//TODO: 
+//TODO: add a color changing mode
