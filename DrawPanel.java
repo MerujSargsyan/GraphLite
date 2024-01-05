@@ -63,24 +63,35 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     public void connectVertex(Point v) {
         Vertex newV = new Vertex(grid.roundValue(v.x), grid.roundValue(v.y));
-        Line newLine = new Line(newV, vertecies.get(vertecies.size()-1));
-        if(lines.contains(newLine)) {
+        Vertex v2 = vertecies.get(vertecies.size()-1);
+        if(newV.equals(v2)) {
             return;
         }
-        System.out.println(newLine);
-        shapes.add(newLine);
-        lines.add(newLine);
-        edgeCount++;
-        repaint();
+        Line newLine = new Line(newV, v2);
+        if(!lines.contains(newLine)) {
+            System.out.println(newLine);
+            shapes.add(newLine);
+            lines.add(newLine);
+            edgeCount++;
+            repaint();
+        }
+        
     }   
 
     public void addLine() {
-        Line newLine = new Line(vertecies.get(vertecies.size() - 2), 
-            vertecies.get(vertecies.size() - 1));
-        System.out.println(newLine);
-        shapes.add(newLine);
-        lines.add(newLine); 
-        edgeCount++;
+        Vertex v1 = vertecies.get(vertecies.size() - 2);
+        Vertex v2 = vertecies.get(vertecies.size() - 1);
+        if(v1.equals(v2)) {
+            return;
+        }
+        Line newLine = new Line(v1, v2);
+        if(!lines.contains(newLine)) {
+            System.out.println(newLine);
+            shapes.add(newLine);
+            lines.add(newLine); 
+            edgeCount++;
+        }
+        
     }
 
     public void paintVertex(Vertex v, Graphics g) {
