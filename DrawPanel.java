@@ -162,7 +162,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == DELETE_VALUE) {
+        if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
             deleteRecentButton();
         }
     }
@@ -171,5 +171,4 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void keyReleased(KeyEvent e) {}; //does nothing
 }
 
-//TODO: catch too many deletes error
-//TODO: create no duplicate edges feature
+//TODO: 
