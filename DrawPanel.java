@@ -101,7 +101,6 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             lines.add(newLine); 
             edgeCount++;
         }
-        System.out.println(newLine);
     }
 
     public void paintVertex(Vertex v, Graphics g) {
@@ -212,6 +211,3 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {}; //does nothing
 }
-
-//TODO: fix duplicate edge error ??
-//TODO: add a color changing mode
