@@ -19,9 +19,12 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Grid grid = new Grid();
 
     private final int DELETE_VALUE = 8;
+    private final int SPACE_VALUE = 32;
     private int vertexCount;
     private int edgeCount;
     private JLabel label;
+
+    private boolean darkMode;
 
     public DrawPanel() {
         label = new JLabel();
@@ -37,6 +40,7 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         shapes = new ArrayList<>();
         vertecies = new ArrayList<>();
         lines = new ArrayList<>();
+        darkMode = true;
     }
 
     
@@ -97,14 +101,22 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
             lines.add(newLine); 
             edgeCount++;
         }
-        
+        System.out.println(newLine);
     }
 
     public void paintVertex(Vertex v, Graphics g) {
         if(v.equals(current)) {
-            g.setColor(Color.RED);
+            if(darkMode) {
+                g.setColor(Color.RED);
+            } else {
+                g.setColor(Color.BLUE);
+            }
         } else {
-            g.setColor(Color.WHITE);
+            if(darkMode) {
+                g.setColor(Color.WHITE);
+            } else {
+                g.setColor(Color.BLACK);
+            }
         }
         g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
             Y_SIZE, ARC_SIZE, ARC_SIZE);
@@ -145,6 +157,17 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void updateLabel() {
         label.setText("|V| = " + vertexCount + " |E| = " + edgeCount);
     }
+
+    public void changeDarkMode() {
+        if(darkMode) {
+            label.setForeground(Color.BLACK);
+            this.setBackground(Color.WHITE);
+        } else {
+            label.setForeground(Color.WHITE);
+            this.setBackground(Color.BLACK);
+        }
+        darkMode = !darkMode;
+    }
     //Overrides all MouseListener methods
     @Override
     public void mouseClicked(MouseEvent e) {}; //nothing happens
@@ -181,10 +204,14 @@ public class DrawPanel extends JPanel implements MouseListener, KeyListener {
         if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
             deleteRecent();
         }
+        if(e.getKeyCode() == SPACE_VALUE) {
+            changeDarkMode();
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {}; //does nothing
 }
 
+//TODO: fix duplicate edge error ??
 //TODO: add a color changing mode
