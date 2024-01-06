@@ -10,3 +10,7 @@ Here are the purposes of each class explained breiefly:
 - Line.java is simply used to draw lines from a starting point to an ending point.
 - Vertex.java is simply used to draw vertecies and keep track of their positions.
 - Shape.java is a superclass to Line and Vertex, simply keeping track of their positon.
+
+Instructions:
+Press backspace to delete the most recently added line and point
+Press space to switch between dark mode and light mode
