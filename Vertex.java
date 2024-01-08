@@ -1,14 +1,19 @@
 import java.awt.Point;
 
 public class Vertex extends Shape {
+    // number of vertecies connected to this vertex by one edge
+    public int neightborhood;
+
     public Vertex(int x, int y) {
         super(x, y);
+        this.neightborhood = 0;
     }
 
     public Vertex(Point p) {
         super(p.x, p.y);
     }
     
+    // @return true if x and y values are the same
     public boolean equals(Vertex v) {
         if(v == null) {
             return false;

@@ -3,10 +3,14 @@ public class Line extends Shape {
 
     public Line(Vertex a, Vertex b) {
         super(a.x, a.y);
+        a.neightborhood++;
+        b.neightborhood++;
         startingPoint = a;
         endingPoint = b;
     }
 
+    // @return true if both startingPoint and endingPoint Vectors are the same
+    //         or if the edge is backwards
     @Override
     public boolean equals(Object o) {
         if(!(o instanceof Line)) {
