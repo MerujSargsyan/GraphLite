@@ -1,4 +1,6 @@
-public abstract class Shape {
+import javax.swing.JFrame;
+
+public abstract class Shape extends JFrame {
     int x, y;
 
     public Shape(int x, int y) {
