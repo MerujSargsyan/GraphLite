@@ -1,6 +1,4 @@
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 
 public class Vertex extends Shape {
     // number of vertecies connected to this vertex by one edge
@@ -8,13 +6,6 @@ public class Vertex extends Shape {
 
     public Vertex(int x, int y) {
         super(x, y);
-        this.neighborhood = 0;
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent m) {
-                System.out.println("output");
-            }
-        });
     }
 
     public Vertex(Point p) {

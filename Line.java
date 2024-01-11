@@ -3,8 +3,6 @@ public class Line extends Shape {
 
     public Line(Vertex a, Vertex b) {
         super(a.x, a.y);
-        a.neighborhood++;
-        b.neighborhood++;
         startingPoint = a;
         endingPoint = b;
     }
