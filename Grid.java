@@ -25,14 +25,18 @@ public class Grid {
         } 
     }
     
-    // @return true if the point is available (the value in HashMap is true)
+    /** 
+     * @return true if the point is available (the value in HashMap is true)
+     */
     private boolean validPoint(Point p) {
         //rounds to nearest factor of 25
         return !grid.getOrDefault(p, false);
     }
 
-    // @param Point p to convert to Vertex
-    // @return Vertex which is made from the rounded x and y of the param Point
+    /**
+     * @param Point p to convert to Vertex
+     * @return Vertex which is made from the rounded x and y of the param Point
+     */
     public Vertex usePoint(Point p) {
         Point newP = new Point(roundValue(p.x), roundValue(p.y));
         if(validPoint(newP)) {
@@ -43,13 +47,17 @@ public class Grid {
         return null;
     }
 
-    // @param Vertex v that will be removed from the grid
+    /**
+     * @param Vertex v that will be removed from the grid
+     */
     public void deletePoint(Vertex v) {
         grid.put(new Point(v.x, v.y), false);
     }
 
-    // @param int num to rund to the nearest dX value
-    // @return num roudned to the nearst MID value
+    /** 
+     * @param int num to rund to the nearest dX value
+     * @return num roudned to the nearst MID value
+     */ 
     public int roundValue(int num) {
         int difference = num % dX;
         int output = num - difference;

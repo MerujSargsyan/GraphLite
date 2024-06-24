@@ -13,7 +13,10 @@ public class Vertex extends Shape {
     }
     
     // @return true if x and y values are the same
-    public boolean equals(Vertex v) {
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Vertex)) return false;
+        Vertex v = (Vertex)o;
         if(v == null) {
             return false;
         }

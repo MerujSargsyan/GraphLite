@@ -11,7 +11,7 @@ public class Main {
         window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
         window.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
-        DrawPanel drawPanel = new DrawPanel();
+        DrawP drawPanel = new DrawP();
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
         drawPanel.addMouseListener(drawPanel);
         drawPanel.addKeyListener(drawPanel);
