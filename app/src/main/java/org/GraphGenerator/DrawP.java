@@ -116,7 +116,7 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         if(current.equals(previous) || current == null || previous == null) {
             return;
         }
-        Line newLine = new Line(previous, current);
+        Line newLine = new DirectedLine(previous, current);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine); 
@@ -147,12 +147,10 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     // helper method for painting edge Graphics on JPanel
     // @param Line l to paint using JPanel Graphics component
     public void paintLine(Line l, Graphics g) {
+        g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
+            l.endingPoint.y);
         if(l instanceof DirectedLine) {
-            g.drawDirLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x,
-                l.endingPoint.y);
-        } else {
-            g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
-                l.endingPoint.y);
+            g.drawPolygon(((DirectedLine)l).getPolygon());
         }
     }
 

@@ -4,8 +4,25 @@
 package org.example;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.GraphGenerator.Vertex;
+
+import java.awt.Polygon;
+import java.util.Arrays;
+
+import org.GraphGenerator.DirectedLine;
 
 public class AppTest {
+    @Test
+    public void perpendicularLine() {
+        Vertex v1 = new Vertex(0, 0);
+        Vertex v2 = new Vertex(2, -4);
 
+        DirectedLine dl = new DirectedLine(v1, v2);
+
+        Polygon p = dl.getPolygon();
+        System.out.println(p.npoints);
+        System.out.println(Arrays.toString(p.xpoints));
+        System.out.println(Arrays.toString(p.ypoints));
+    }
 }
