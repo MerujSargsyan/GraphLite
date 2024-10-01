@@ -147,8 +147,13 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     // helper method for painting edge Graphics on JPanel
     // @param Line l to paint using JPanel Graphics component
     public void paintLine(Line l, Graphics g) {
-        g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
-            l.endingPoint.y);
+        if(l instanceof DirectedLine) {
+            g.drawDirLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x,
+                l.endingPoint.y);
+        } else {
+            g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
+                l.endingPoint.y);
+        }
     }
 
     // deletes the most recent edge or graph that was painted using the
