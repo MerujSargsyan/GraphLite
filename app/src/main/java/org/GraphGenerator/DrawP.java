@@ -102,8 +102,8 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
             updateCurrent(newV);
             return;
         }
-        Line newLine = new Line(newV, current);
-        if(isDirected) newLine = new DirectedLine(newV, current);
+        Line newLine = new Line(current, newV);
+        if(isDirected) newLine = new DirectedLine(current, newV);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine);
