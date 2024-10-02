@@ -77,12 +77,12 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
 
     // Adds a vertex to the panel and draws a line to it from the current vertex
     // @param Vertex v to be added
-    public void addVertex(Vertex v) {
+    public void addVertex(Vertex v, boolean isDirected) {
         shapes.add(v);
         vertecies.add(v);
         vertexCount++;
         updateCurrent(v);   
-        addLine();
+        addLine(isDirected);
         repaint();
     }
 
@@ -96,13 +96,14 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     // Used if a point already exists on the graph so that instead of creating a
     // new one, an edge is connected to it.
     // @param Point p to connect the edge to
-    public void connectVertex(Point p) {
+    public void connectVertex(Point p, boolean isDirected) {
         Vertex newV = new Vertex(grid.roundValue(p.x), grid.roundValue(p.y));
         if(newV.equals(current)) {
             updateCurrent(newV);
             return;
         }
         Line newLine = new Line(newV, current);
+        if(isDirected) newLine = new DirectedLine(newV, current);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine);
@@ -113,11 +114,13 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     }   
 
     // helper method to connect edges to vertecies
-    public void addLine() {
+    public void addLine(boolean isDirected) {
         if(current.equals(previous) || current == null || previous == null) {
             return;
         }
-        Line newLine = new DirectedLine(previous, current);
+
+        Line newLine = new Line(previous, current);
+        if(isDirected) newLine = new DirectedLine(previous, current);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine); 
@@ -164,6 +167,8 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
             triangle.closePath();
 
             g2D.draw(triangle);
+
+            g2D.setStroke(new BasicStroke(1));
         }
     }
 
@@ -231,9 +236,9 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         Point p = getMousePosition(false);
         Vertex v = grid.usePoint(p);
         if(v == null) {
-            connectVertex(p);
+            connectVertex(p, e.isShiftDown());
         } else {
-            addVertex(v);
+            addVertex(v, e.isShiftDown());
         }
         updateText();
     } 
@@ -248,10 +253,9 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
             deleteRecent();
-        }
-        if(e.getKeyCode() == SPACE_VALUE) {
+        } else if(e.getKeyCode() == SPACE_VALUE) {
             changeDarkMode();
-        }
+        }     
     }
 
     @Override
