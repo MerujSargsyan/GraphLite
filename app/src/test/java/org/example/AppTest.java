@@ -4,8 +4,29 @@
 package org.example;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.GraphGenerator.Vertex;
+
+import java.util.Arrays;
+import java.util.Random;
+
+import org.GraphGenerator.DirectedLine;
 
 public class AppTest {
+    @Test
+    public void perpendicularLine() {
+        Random rand = new Random();
+        int[] arr = rand.ints(20, -100, 100).toArray();
+        System.out.println(Arrays.toString(arr));
+        int idx = 0;
+        for (int i = 0; i < 5; i++) {
+            Vertex v1 = new Vertex(arr[idx++], arr[idx++]);
+            Vertex v2 = new Vertex(arr[idx++], arr[idx++]);
 
+            DirectedLine dl = new DirectedLine(v1, v2);
+
+            float[] points = dl.getPolygon();
+            System.out.println(Arrays.toString(points));
+        }
+    }
 }

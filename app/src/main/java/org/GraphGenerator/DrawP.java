@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.*;
+import java.awt.geom.Path2D;
 
 //TO-DO: implement MouseListener
 public class DrawP extends JPanel implements MouseListener, KeyListener {
@@ -76,12 +77,12 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
 
     // Adds a vertex to the panel and draws a line to it from the current vertex
     // @param Vertex v to be added
-    public void addVertex(Vertex v) {
+    public void addVertex(Vertex v, boolean isDirected) {
         shapes.add(v);
         vertecies.add(v);
         vertexCount++;
         updateCurrent(v);   
-        addLine();
+        addLine(isDirected);
         repaint();
     }
 
@@ -95,13 +96,14 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     // Used if a point already exists on the graph so that instead of creating a
     // new one, an edge is connected to it.
     // @param Point p to connect the edge to
-    public void connectVertex(Point p) {
+    public void connectVertex(Point p, boolean isDirected) {
         Vertex newV = new Vertex(grid.roundValue(p.x), grid.roundValue(p.y));
         if(newV.equals(current)) {
             updateCurrent(newV);
             return;
         }
-        Line newLine = new Line(newV, current);
+        Line newLine = new Line(current, newV);
+        if(isDirected) newLine = new DirectedLine(current, newV);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine);
@@ -112,11 +114,13 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     }   
 
     // helper method to connect edges to vertecies
-    public void addLine() {
+    public void addLine(boolean isDirected) {
         if(current.equals(previous) || current == null || previous == null) {
             return;
         }
+
         Line newLine = new Line(previous, current);
+        if(isDirected) newLine = new DirectedLine(previous, current);
         if(!lines.contains(newLine)) {
             shapes.add(newLine);
             lines.add(newLine); 
@@ -149,6 +153,23 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     public void paintLine(Line l, Graphics g) {
         g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
             l.endingPoint.y);
+        if(l instanceof DirectedLine) {
+            Graphics2D g2D = (Graphics2D)g;
+            Path2D.Float triangle = new Path2D.Float();
+
+            g2D.setStroke(new BasicStroke(5));
+
+            float[] points = ((DirectedLine)l).getPolygon();
+            triangle.moveTo(points[0], points[1]);
+            triangle.lineTo(points[2], points[3]);
+            triangle.lineTo(points[4], points[5]);
+            triangle.lineTo(points[0], points[1]);
+            triangle.closePath();
+
+            g2D.draw(triangle);
+
+            g2D.setStroke(new BasicStroke(1));
+        }
     }
 
     // deletes the most recent edge or graph that was painted using the
@@ -215,9 +236,9 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         Point p = getMousePosition(false);
         Vertex v = grid.usePoint(p);
         if(v == null) {
-            connectVertex(p);
+            connectVertex(p, e.isShiftDown());
         } else {
-            addVertex(v);
+            addVertex(v, e.isShiftDown());
         }
         updateText();
     } 
@@ -232,10 +253,9 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
             deleteRecent();
-        }
-        if(e.getKeyCode() == SPACE_VALUE) {
+        } else if(e.getKeyCode() == SPACE_VALUE) {
             changeDarkMode();
-        }
+        }     
     }
 
     @Override
