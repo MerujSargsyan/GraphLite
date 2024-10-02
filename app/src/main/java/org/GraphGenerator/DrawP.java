@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.*;
+import java.awt.geom.Path2D;
 
 //TO-DO: implement MouseListener
 public class DrawP extends JPanel implements MouseListener, KeyListener {
@@ -150,7 +151,19 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
             l.endingPoint.y);
         if(l instanceof DirectedLine) {
-            g.drawPolygon(((DirectedLine)l).getPolygon());
+            Graphics2D g2D = (Graphics2D)g;
+            Path2D.Float triangle = new Path2D.Float();
+
+            g2D.setStroke(new BasicStroke(5));
+
+            float[] points = ((DirectedLine)l).getPolygon();
+            triangle.moveTo(points[0], points[1]);
+            triangle.lineTo(points[2], points[3]);
+            triangle.lineTo(points[4], points[5]);
+            triangle.lineTo(points[0], points[1]);
+            triangle.closePath();
+
+            g2D.draw(triangle);
         }
     }
 

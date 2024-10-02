@@ -7,22 +7,26 @@ import org.junit.Test;
 
 import org.GraphGenerator.Vertex;
 
-import java.awt.Polygon;
 import java.util.Arrays;
+import java.util.Random;
 
 import org.GraphGenerator.DirectedLine;
 
 public class AppTest {
     @Test
     public void perpendicularLine() {
-        Vertex v1 = new Vertex(0, 0);
-        Vertex v2 = new Vertex(2, -4);
+        Random rand = new Random();
+        int[] arr = rand.ints(20, -100, 100).toArray();
+        System.out.println(Arrays.toString(arr));
+        int idx = 0;
+        for (int i = 0; i < 5; i++) {
+            Vertex v1 = new Vertex(arr[idx++], arr[idx++]);
+            Vertex v2 = new Vertex(arr[idx++], arr[idx++]);
 
-        DirectedLine dl = new DirectedLine(v1, v2);
+            DirectedLine dl = new DirectedLine(v1, v2);
 
-        Polygon p = dl.getPolygon();
-        System.out.println(p.npoints);
-        System.out.println(Arrays.toString(p.xpoints));
-        System.out.println(Arrays.toString(p.ypoints));
+            float[] points = dl.getPolygon();
+            System.out.println(Arrays.toString(points));
+        }
     }
 }

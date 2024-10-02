@@ -21,4 +21,9 @@ public class Vertex extends Shape {
         Vertex v = (Vertex)o;
         return (this.x == v.x && this.y == v.y);
     }
+
+    @Override
+    public String toString() {
+        return "x: " + x + " y: " + y;
+    }
 }

@@ -1,22 +1,19 @@
 package org.GraphGenerator;
 
-import java.awt.Polygon;
-
 public class DirectedLine extends Line {
     public DirectedLine(Vertex a, Vertex b) {
         super(a, b);
     } 
 
-    public Polygon getPolygon() {
+    public float[] getPolygon() {
         // Triangle
-        int[] xs = new int[3];
-        int[] ys = new int[3];
+        float[] points = new float[6];
 
         int x1 = startingPoint.x, y1 = startingPoint.y;
         int x2 = endingPoint.x, y2 = endingPoint.y;
 
-        xs[0] = x2;
-        ys[0] = y2;
+        points[0] = x2;
+        points[1] = y2;
 
         float m = (y2 - y1) / (x2 - x1);
         float b = y2 - m*x2;
@@ -35,14 +32,15 @@ public class DirectedLine extends Line {
         float leftY = invM * leftX + invB;
         float rightY = invM * rightX + invB;
 
-        xs[1] = (int)leftX;
-        ys[1] = (int)leftY;
+        points[2] = leftX;
+        points[3] = leftY;
 
-        xs[2] = (int)rightX;
-        ys[2] = (int)rightY;
+        points[4] = rightX;
+        points[5] = rightY;
 
-        return new Polygon(xs, ys, 3);
+        return points;
     }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof DirectedLine)) {
