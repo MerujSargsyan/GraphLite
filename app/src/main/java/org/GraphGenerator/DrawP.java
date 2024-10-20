@@ -150,6 +150,12 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     // helper method for painting edge Graphics on JPanel
     // @param Line l to paint using JPanel Graphics component
     public void paintLine(Line l, Graphics g) {
+        if(darkMode) {
+            g.setColor(Color.WHITE);
+        } else {
+            g.setColor(Color.BLACK);
+        }
+
         g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
             l.endingPoint.y);
         if(l instanceof DirectedLine) {
