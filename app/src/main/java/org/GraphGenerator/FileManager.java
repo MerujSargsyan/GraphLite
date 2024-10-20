@@ -34,13 +34,14 @@ public class FileManager {
 
     public static Line stringToLine(String s) throws NumberFormatException {
         int midIdx = s.indexOf("),(");
-        System.out.println(midIdx);
-        String sP = s.substring(3, midIdx);
-        String eP = s.substring(midIdx + 3, s.length() - 1);
+        String sP = "\\v" + s.substring(3, midIdx);
+        String eP = "\\v" + s.substring(midIdx + 3, s.length() - 1);
         System.out.println(sP);
         System.out.println(eP);
         Vertex startV = stringToVertex(sP);
+        System.out.println(startV);
         Vertex endV = stringToVertex(eP);
+        System.out.println(endV);
         return new Line(startV, endV);
     }
 
@@ -56,10 +57,11 @@ public class FileManager {
 
                 if(parsed.charAt(1) == 'v') {
                     Vertex v = stringToVertex(parsed);
-                    System.out.println(v);
                     arr.add(v);
                 } else if(parsed.charAt(1) == 'e') {
-                    arr.add(stringToLine(parsed));
+                    Line l = stringToLine(parsed);
+                    System.out.println(l);
+                    arr.add(l);
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -73,7 +75,6 @@ public class FileManager {
         }
        
         System.out.println(arr);
-        return null;
-        //return arr;
+        return arr;
     }
 }

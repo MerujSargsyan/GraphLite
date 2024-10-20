@@ -65,6 +65,14 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         if(tempShapes != null) {
             shapes = tempShapes;
         } 
+
+        tempShapes.forEach((s) -> {
+            if(s instanceof Line) {
+                lines.add((Line)s);
+            } else {
+                vertecies.add((Vertex)s);
+            }
+        });
     }
 
 
