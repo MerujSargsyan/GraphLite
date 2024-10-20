@@ -36,12 +36,10 @@ public class FileManager {
         int midIdx = s.indexOf("),(");
         String sP = "\\v" + s.substring(3, midIdx);
         String eP = "\\v" + s.substring(midIdx + 3, s.length() - 1);
-        System.out.println(sP);
-        System.out.println(eP);
+
         Vertex startV = stringToVertex(sP);
-        System.out.println(startV);
         Vertex endV = stringToVertex(eP);
-        System.out.println(endV);
+
         return new Line(startV, endV);
     }
 
@@ -53,14 +51,12 @@ public class FileManager {
         try(Scanner sc = new Scanner(fd)) {
             while(sc.hasNextLine()) {
                 String parsed = sc.nextLine();
-                System.out.println(parsed);
 
                 if(parsed.charAt(1) == 'v') {
                     Vertex v = stringToVertex(parsed);
                     arr.add(v);
                 } else if(parsed.charAt(1) == 'e') {
                     Line l = stringToLine(parsed);
-                    System.out.println(l);
                     arr.add(l);
                 } else {
                     throw new IllegalArgumentException();
@@ -74,7 +70,6 @@ public class FileManager {
             return null;
         }
        
-        System.out.println(arr);
         return arr;
     }
 }

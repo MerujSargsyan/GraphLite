@@ -70,9 +70,16 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
             if(s instanceof Line) {
                 lines.add((Line)s);
             } else {
-                vertecies.add((Vertex)s);
+                // TODO: manage hashtable for grid
+                Vertex v = (Vertex)s;
+                vertecies.add(v);
+                grid.usePoint(v.x, v.y);
             }
         });
+
+        vertexCount = vertecies.size();
+        edgeCount = lines.size();
+        current = vertecies.get(vertecies.size() - 1);
     }
 
 
