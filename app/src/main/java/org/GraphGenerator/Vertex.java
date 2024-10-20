@@ -27,4 +27,8 @@ public class Vertex extends Shape {
     public String toString() {
         return "x: " + x + " y: " + y;
     }
+
+    public String outString() {
+        return "\\v" + x + "," + y;
+    }
 }

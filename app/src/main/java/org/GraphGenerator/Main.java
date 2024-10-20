@@ -1,7 +1,7 @@
 package org.GraphGenerator;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import javax.swing.JFrame;
 
 public class Main {
     final public static int WINDOW_SIZE_X = 750;
@@ -13,7 +13,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
-        DrawP drawPanel = new DrawP();
+        DrawP drawPanel;
+        if(args.length == 1) {
+            drawPanel = new DrawP(args[0]);
+        } else {
+            drawPanel = new DrawP();
+        }
+
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
         drawPanel.addMouseListener(drawPanel);
         drawPanel.addKeyListener(drawPanel);

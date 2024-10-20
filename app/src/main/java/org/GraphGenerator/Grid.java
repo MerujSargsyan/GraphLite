@@ -49,6 +49,17 @@ public class Grid {
         return null;
     }
 
+    public Vertex usePoint(int x, int y) {
+        Point newP = new Point(roundValue(x), roundValue(y));
+        if(validPoint(newP)) {
+            grid.put(newP, true);
+
+            return new Vertex(newP);
+        }
+
+        return null;
+    }
+
     /**
      * @param Vertex v that will be removed from the grid
      */
