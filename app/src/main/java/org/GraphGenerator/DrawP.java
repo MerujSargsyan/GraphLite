@@ -58,6 +58,16 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         darkMode = true;
     }
 
+    public DrawP(String filename) {
+        this();
+
+        ArrayList<Shape> tempShapes = FileManager.parseInput(filename);
+        if(tempShapes != null) {
+            shapes = tempShapes;
+        } 
+    }
+
+
     // Custom way to paint on JPanel
     @Override
     protected void paintComponent(Graphics g) {
@@ -259,7 +269,7 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         } else if(e.getKeyCode() == KEY_SPACE) {
             changeDarkMode();
         } else if(e.getKeyCode() == KEY_S) {
-            FileManager.outputToFile(vertecies, lines);        
+            FileManager.outputToFile(shapes);        
         }    
     }
 

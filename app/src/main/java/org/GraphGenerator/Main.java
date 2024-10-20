@@ -13,7 +13,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
-        DrawP drawPanel = new DrawP();
+        DrawP drawPanel;
+        if(args.length == 1) {
+            drawPanel = new DrawP(args[0]);
+        } else {
+            drawPanel = new DrawP();
+        }
+
         drawPanel.setSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
         drawPanel.addMouseListener(drawPanel);
         drawPanel.addKeyListener(drawPanel);

@@ -9,4 +9,6 @@ public abstract class Shape extends JFrame {
         this.x = x;
         this.y = y;
     }
+
+    public abstract String outString();
 }

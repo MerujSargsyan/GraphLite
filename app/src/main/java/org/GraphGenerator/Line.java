@@ -33,4 +33,9 @@ public class Line extends Shape {
         return "<" + startingPoint.x + ", " + startingPoint.y + "> -> <" +
             endingPoint.x + ", " + endingPoint.y + ">";
     }
+
+    public String outString() {
+        return "\\e(" + startingPoint.x + "," + startingPoint.y + "),(" +
+            endingPoint.x + "," + endingPoint.y + ")";
+    }
 }
