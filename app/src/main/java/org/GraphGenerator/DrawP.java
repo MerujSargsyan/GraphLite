@@ -64,14 +64,12 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
 
         g.setColor(Color.WHITE);
 
-        for(Shape s : shapes) {
-            if(s instanceof Vertex) {
-                //Draw vertex
-                paintVertex((Vertex)s, g);
-            } else if(s instanceof Line) {
-                //Draw line
-                paintLine((Line)s, g);
-            }
+        for(int e = 0; e < lines.size(); e++) {
+            paintLine(lines.get(e), g);            
+        }
+
+        for(int v = 0; v < vertecies.size(); v++) {
+            paintVertex(vertecies.get(v), v+1, g);
         }
     }
 
@@ -130,7 +128,7 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
 
     // helper method for painting vertex Graphics on JPanel
     // @param Vertex v to paint using JPanel Graphics component
-    public void paintVertex(Vertex v, Graphics g) {
+    public void paintVertex(Vertex v, int label, Graphics g) {
         if(v.equals(current)) {
             if(darkMode) {
                 g.setColor(Color.RED);
@@ -146,11 +144,18 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         }
         g.fillRoundRect(v.x - CENTER_ADJUSTMENT, v.y - CENTER_ADJUSTMENT, X_SIZE, 
             Y_SIZE, ARC_SIZE, ARC_SIZE);
+        g.drawString(label + "", v.x - 20, v.y + 20);
     }
 
     // helper method for painting edge Graphics on JPanel
     // @param Line l to paint using JPanel Graphics component
     public void paintLine(Line l, Graphics g) {
+        if(darkMode) {
+            g.setColor(Color.WHITE);
+        } else {
+            g.setColor(Color.BLACK);
+        }
+
         g.drawLine(l.startingPoint.x, l.startingPoint.y, l.endingPoint.x, 
             l.endingPoint.y);
         if(l instanceof DirectedLine) {
