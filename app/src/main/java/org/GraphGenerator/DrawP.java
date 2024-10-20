@@ -25,8 +25,9 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
     private Grid grid = new Grid();
 
     // Standard keybaord inputs
-    private final int DELETE_VALUE = 8;
-    private final int SPACE_VALUE = 32;
+    private final int KEY_DELETE = 8;
+    private final int KEY_SPACE = 32;
+    private final int KEY_S = 83;
 
     private int vertexCount;
     private int edgeCount;
@@ -248,19 +249,18 @@ public class DrawP extends JPanel implements MouseListener, KeyListener {
         updateText();
     } 
 
-    // Overrides all KeyListener methods
     @Override
     public void keyTyped(KeyEvent e) {}; //does nothing
 
-    // Deletes recent Shape if input is "backspace"
-    // Changes color mode if input is "space"
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == DELETE_VALUE && shapes.size() > 0) {
+        if(e.getKeyCode() == KEY_DELETE && shapes.size() > 0) {
             deleteRecent();
-        } else if(e.getKeyCode() == SPACE_VALUE) {
+        } else if(e.getKeyCode() == KEY_SPACE) {
             changeDarkMode();
-        }     
+        } else if(e.getKeyCode() == KEY_S) {
+            FileManager.outputToFile(vertecies, lines);        
+        }    
     }
 
     @Override

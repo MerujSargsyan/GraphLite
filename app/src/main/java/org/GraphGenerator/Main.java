@@ -1,7 +1,7 @@
 package org.GraphGenerator;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import javax.swing.JFrame;
 
 public class Main {
     final public static int WINDOW_SIZE_X = 750;
