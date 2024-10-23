@@ -1,4 +1,4 @@
-# GraphVIS
+# GraphLite
 
 A simple program where the user can create vertecies which are automatically connected to the previously added vertecie.
 
